@@ -1,7 +1,10 @@
 const quoteContainer = document.getElementById('quote-container');
 const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
+const copyBtn = document.getElementById('copy');
 const twitterBtn = document.getElementById('twitter');
+const facebookBtn = document.getElementById('facebook');
+const instagramBtn = document.getElementById('instagram');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 
@@ -26,7 +29,7 @@ function newQuote() {
     if (!quote.author) {
         authorText.textContent = 'unknown';
     } else {
-        authorText.textContent = quote.author;
+        authorText.textContent = '- ' + quote.author;
     }
     // Check Quote length to determine styling
     if (quote.text.length > 120) {
@@ -58,9 +61,33 @@ function tweetQuote() {
     window.open(twitterUrl, '_blank');
 }
 
+// Copy Quote to Clipboard
+function copyQuoteToClipboard() {
+    navigator.clipboard.writeText(`${quoteText.textContent} ${authorText.textContent}`)
+    .then(console.log('Quote copied to clipboard'))
+    .catch(error => console.error("Error copying text:", error));
+}
+
+// Post Quote on Facebook
+function postQuoteOnFacebook() {
+    // copyQuoteToClipboard();
+    const facebookUrl = 'https://www.facebook.com/stories/create'
+    window.open(facebookUrl, '_blank');
+}
+
+// Share Quote on Instagram
+function shareQuoteOnInstagram() {
+    const instagramUrl = `https://www.instagram.com/`;
+    window.open(instagramUrl, '_blank');
+}
+
 // Event Listeners
 newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
+facebookBtn.addEventListener('click', postQuoteOnFacebook);
+instagramBtn.addEventListener('click', shareQuoteOnInstagram);
+copyBtn.addEventListener('click', copyQuoteToClipboard);
+
 
 // On Load
 getQuotes();
